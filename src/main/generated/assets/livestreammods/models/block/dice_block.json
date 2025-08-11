@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "livestreammods:block/dice_block_down",
+    "east": "livestreammods:block/dice_block_east",
+    "north": "livestreammods:block/dice_block_north",
+    "particle": "livestreammods:block/dice_block_north",
+    "south": "livestreammods:block/dice_block_south",
+    "up": "livestreammods:block/dice_block_up",
+    "west": "livestreammods:block/dice_block_west"
+  }
+}
