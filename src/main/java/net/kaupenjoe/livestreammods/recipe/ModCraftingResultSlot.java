@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.RecipeUnlocker;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.screen.slot.Slot;
@@ -65,8 +66,16 @@ public class ModCraftingResultSlot extends Slot {
         CraftingRecipeInput craftingRecipeInput = positioned.input();
         int i = positioned.left();
         int j = positioned.top();
-        DefaultedList<ItemStack> defaultedList = player.getWorld().getRecipeManager().getRemainingStacks(ModRecipes.FIVE_BY_FIVE_CRAFTING_RECIPE_TYPE,
-                craftingRecipeInput, player.getWorld());
+
+        DefaultedList<ItemStack> defaultedList;
+
+        if(craftingRecipeInput.getWidth() > 3 || craftingRecipeInput.getHeight() > 3) {
+            defaultedList = player.getWorld().getRecipeManager().getRemainingStacks(ModRecipes.FIVE_BY_FIVE_CRAFTING_RECIPE_TYPE,
+                    craftingRecipeInput, player.getWorld());
+        } else {
+            defaultedList = player.getWorld().getRecipeManager().getRemainingStacks(RecipeType.CRAFTING,
+                    craftingRecipeInput, player.getWorld());
+        }
 
         for (int k = 0; k < craftingRecipeInput.getHeight(); k++) {
             for (int l = 0; l < craftingRecipeInput.getWidth(); l++) {

@@ -1,0 +1,18 @@
+{
+  "type": "livestreammods:five_by_five_crafting",
+  "pattern": [
+    "DD",
+    "DD",
+    "DD",
+    "DD",
+    "DD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "minecraft:end_rod"
+  }
+}

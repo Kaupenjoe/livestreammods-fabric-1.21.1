@@ -14,13 +14,13 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class FiveByFiveCraftingRecipe implements CraftingRecipe {
-    final ModRawShapedRecipe raw;
+    final RawShapedRecipe raw;
     final ItemStack result;
     final String group;
     final CraftingRecipeCategory category;
     final boolean showNotification;
 
-    public FiveByFiveCraftingRecipe(String group, CraftingRecipeCategory category, ModRawShapedRecipe raw, ItemStack result, boolean showNotification) {
+    public FiveByFiveCraftingRecipe(String group, CraftingRecipeCategory category, RawShapedRecipe raw, ItemStack result, boolean showNotification) {
         this.group = group;
         this.category = category;
         this.raw = raw;
@@ -71,14 +71,6 @@ public class FiveByFiveCraftingRecipe implements CraftingRecipe {
         return this.getResult(wrapperLookup).copy();
     }
 
-    public int getWidth() {
-        return this.raw.getWidth();
-    }
-
-    public int getHeight() {
-        return this.raw.getHeight();
-    }
-
     @Override
     public RecipeType<?> getType() {
         return ModRecipes.FIVE_BY_FIVE_CRAFTING_RECIPE_TYPE;
@@ -96,7 +88,7 @@ public class FiveByFiveCraftingRecipe implements CraftingRecipe {
                 instance -> instance.group(
                                 Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
                                 CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter(recipe -> recipe.category),
-                                ModRawShapedRecipe.CODEC.forGetter(recipe -> recipe.raw),
+                                RawShapedRecipe.CODEC.forGetter(recipe -> recipe.raw),
                                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                                 Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(recipe -> recipe.showNotification)
                         )
@@ -119,7 +111,7 @@ public class FiveByFiveCraftingRecipe implements CraftingRecipe {
         private static FiveByFiveCraftingRecipe read(RegistryByteBuf buf) {
             String string = buf.readString();
             CraftingRecipeCategory craftingRecipeCategory = buf.readEnumConstant(CraftingRecipeCategory.class);
-            ModRawShapedRecipe rawShapedRecipe = ModRawShapedRecipe.PACKET_CODEC.decode(buf);
+            RawShapedRecipe rawShapedRecipe = RawShapedRecipe.PACKET_CODEC.decode(buf);
             ItemStack itemStack = ItemStack.PACKET_CODEC.decode(buf);
             boolean bl = buf.readBoolean();
             return new FiveByFiveCraftingRecipe(string, craftingRecipeCategory, rawShapedRecipe, itemStack, bl);
@@ -128,7 +120,7 @@ public class FiveByFiveCraftingRecipe implements CraftingRecipe {
         private static void write(RegistryByteBuf buf, FiveByFiveCraftingRecipe recipe) {
             buf.writeString(recipe.group);
             buf.writeEnumConstant(recipe.category);
-            ModRawShapedRecipe.PACKET_CODEC.encode(buf, recipe.raw);
+            RawShapedRecipe.PACKET_CODEC.encode(buf, recipe.raw);
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
             buf.writeBoolean(recipe.showNotification);
         }
